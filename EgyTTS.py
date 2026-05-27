@@ -163,7 +163,12 @@ class EgyTTSGenerator:
         
         # 1. Resolve model directories and download if necessary
         if model_name == "OmarSamir/EGTTS-V0.1 (Auto-Download)":
-            model_dir = os.path.join(tts_models_dir, "EGTTS-V0.1")
+            # Check if user already has model.pth in the parent tts_models_dir
+            parent_checkpoint = os.path.join(tts_models_dir, "model.pth")
+            if os.path.exists(parent_checkpoint):
+                model_dir = tts_models_dir
+            else:
+                model_dir = os.path.join(tts_models_dir, "EGTTS-V0.1")
             download_model_files(model_dir)
             checkpoint_path = os.path.join(model_dir, "model.pth")
             config_path = os.path.join(model_dir, "config.json")
